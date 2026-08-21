@@ -1,0 +1,60 @@
+# Production WordPress stack for realitykamenicka.cz.
+# The shared Caddy container reaches the wordpress service through the external
+# Docker network named `web`.
+
+services:
+  db:
+    image: mariadb:11.4
+    container_name: realitykamenicka-db
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${WORDPRESS_DB_NAME}
+      MARIADB_USER: ${WORDPRESS_DB_USER}
+      MARIADB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  wordpress:
+    image: wordpress:php8.4-apache
+    container_name: realitykamenicka-wordpress
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: wp_
+      WORDPRESS_DEBUG: "0"
+      WORDPRESS_CONFIG_EXTRA: >-
+        define('WP_HOME', 'https://www.realitykamenicka.cz');
+        define('WP_SITEURL', 'https://www.realitykamenicka.cz');
+        define('FORCE_SSL_ADMIN', true);
+    volumes:
+      - ./www:/var/www/html
+      - uploads_data:/var/www/html/wp-content/uploads
+      - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:ro
+    networks:
+      - internal
+      - web
+
+volumes:
+  db_data:
+  uploads_data:
+
+networks:
+  internal:
+    driver: bridge
+  web:
+    name: web
+    external: true

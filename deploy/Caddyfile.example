@@ -1,0 +1,10 @@
+# Add this site to the shared Caddy configuration on the server.
+# The caddy-proxy container must be attached to the external Docker network `web`.
+
+www.realitykamenicka.cz {
+    reverse_proxy realitykamenicka-wordpress:80
+}
+
+realitykamenicka.cz {
+    redir https://www.realitykamenicka.cz{uri} permanent
+}

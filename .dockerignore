@@ -1,0 +1,7 @@
+.git
+.env
+.DS_Store
+logs
+storage/theme-packages/*.zip
+.ai
+docs

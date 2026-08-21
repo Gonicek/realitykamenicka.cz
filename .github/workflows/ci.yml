@@ -1,0 +1,53 @@
+name: WordPress CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  wordpress:
+    name: WordPress quality gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: wp-cli
+
+      - name: Validate Compose files
+        run: |
+          docker compose -f compose.yml config --quiet
+          docker compose -f compose.prod.yml config --quiet
+
+      - name: PHP syntax scan for custom code
+        run: |
+          TARGETS=""
+          [ -d www/wp-content/themes ] && TARGETS="$TARGETS www/wp-content/themes"
+          [ -d www/wp-content/plugins ] && TARGETS="$TARGETS www/wp-content/plugins"
+          [ -d www/wp-content/mu-plugins ] && TARGETS="$TARGETS www/wp-content/mu-plugins"
+          if [ -n "$TARGETS" ]; then
+            find $TARGETS \
+              -path '*/vendor/*' -prune -o \
+              -path '*/node_modules/*' -prune -o \
+              -name '*.php' -print0 | xargs -0 -r -n1 php -l
+          fi
+
+      - name: WordPress filesystem sanity
+        run: |
+          test -d www
+          test ! -f www/wp-config.php
+          test ! -d www/docs
+          test ! -d www/.ai

@@ -1,0 +1,25 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Runtime-generated WordPress configuration and user uploads.
+/www/wp-config.php
+/www/wp-content/uploads/
+/www/wp-content/cache/
+/www/wp-content/upgrade/
+/www/wp-content/debug.log
+/www/wp-content/wflogs/
+/www/wp-content/ai1wm-backups/
+/www/wp-content/backups/
+/www/wp-content/backup-db/
+/www/wp-content/advanced-cache.php
+/www/wp-content/object-cache.php
+/www/wp-content/wp-cache-config.php
+
+# Local exports, generated packages and runtime logs.
+/storage/*
+!/storage/.gitkeep
+/logs/*
+!/logs/.gitkeep

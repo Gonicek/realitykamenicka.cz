@@ -1,0 +1,116 @@
+name: Deploy realitykamenicka.cz
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-realitykamenicka-main
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to production server
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required secrets
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          DEPLOY_PATH: ${{ secrets.REALITYKAMENICKA_DEPLOY_PATH }}
+        run: |
+          set -euo pipefail
+          missing=0
+          for name in SERVER_HOST SERVER_PORT SERVER_USER SERVER_SSH_KEY DEPLOY_PATH; do
+            if [ -z "${!name:-}" ]; then
+              echo "::error::Missing required secret: $name"
+              missing=1
+            fi
+          done
+          exit "$missing"
+
+      - name: Configure SSH
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SERVER_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${SERVER_PORT:-22}" "$SERVER_HOST" >> ~/.ssh/known_hosts
+
+      - name: Backup current deployment
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          DEPLOY_PATH: ${{ secrets.REALITYKAMENICKA_DEPLOY_PATH }}
+        run: |
+          set -euo pipefail
+          BACKUP_DIR="$HOME/deploy-backups/realitykamenicka.cz"
+          TS="$(date +%Y%m%d-%H%M%S)"
+          ssh -i ~/.ssh/deploy_key -p "${SERVER_PORT:-22}" "$SERVER_USER@$SERVER_HOST" \
+            "mkdir -p '$BACKUP_DIR'; if [ -d '$DEPLOY_PATH' ]; then tar --exclude='./www/wp-content/uploads' --exclude='./www/wp-content/cache' -czf '$BACKUP_DIR/files-$TS.tgz' -C '$DEPLOY_PATH' .; fi"
+
+      - name: Sync application files
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          DEPLOY_PATH: ${{ secrets.REALITYKAMENICKA_DEPLOY_PATH }}
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/deploy_key -p "${SERVER_PORT:-22}" "$SERVER_USER@$SERVER_HOST" "mkdir -p '$DEPLOY_PATH'"
+          scp -i ~/.ssh/deploy_key -P "${SERVER_PORT:-22}" \
+            compose.prod.yml .env.production.example \
+            "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/"
+          scp -i ~/.ssh/deploy_key -P "${SERVER_PORT:-22}" -r \
+            www config deploy \
+            "$SERVER_USER@$SERVER_HOST:$DEPLOY_PATH/"
+
+      - name: Start production stack
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          DEPLOY_PATH: ${{ secrets.REALITYKAMENICKA_DEPLOY_PATH }}
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/deploy_key -p "${SERVER_PORT:-22}" "$SERVER_USER@$SERVER_HOST" \
+            "cd '$DEPLOY_PATH' && docker compose --env-file .env.production -f compose.prod.yml up -d --remove-orphans && docker compose --env-file .env.production -f compose.prod.yml ps"
+
+      - name: Reload Caddy
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/deploy_key -p "${SERVER_PORT:-22}" "$SERVER_USER@$SERVER_HOST" \
+            "docker exec caddy-proxy caddy reload --config /etc/caddy/Caddyfile --force"
+
+      - name: Verify HTTPS
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6; do
+            code=$(curl --silent --location --max-time 20 -o /dev/null -w '%{http_code}' https://www.realitykamenicka.cz/ || true)
+            echo "Attempt $i: HTTP $code"
+            case "$code" in
+              200|301|302) exit 0 ;;
+            esac
+            sleep 10
+          done
+          echo '::error::HTTPS smoke test failed'
+          exit 1

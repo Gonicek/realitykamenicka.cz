@@ -1,0 +1,331 @@
+{
+  "title": "Dokumentace metrik dashboardu",
+  "version": "Pracovní verze 0.1",
+  "chapters": [
+    {
+      "id": "zakladni-metriky",
+      "code": "ZM",
+      "title": "Základní metriky",
+      "description": "Souhrnný přehled hlavních obchodních metrik a celkového výkonu kampaní."
+    },
+    {
+      "id": "google-ads",
+      "code": "GA",
+      "title": "Google Ads",
+      "description": "Výkon placených kampaní v Google Ads."
+    },
+    {
+      "id": "meta",
+      "code": "MT",
+      "title": "Meta",
+      "description": "Výkon kampaní v ekosystému Meta."
+    },
+    {
+      "id": "sklik",
+      "code": "SK",
+      "title": "Sklik",
+      "description": "Výkon kampaní v reklamním systému Sklik."
+    }
+  ],
+  "elements": [
+    {
+      "id": "ZM-001",
+      "title": "Konverze celkem",
+      "value": "159",
+      "description": "Celkový počet evidovaných konverzí za sledované období.",
+      "chapter": "Základní metriky",
+      "chapter_id": "zakladni-metriky",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 10,
+        "y": 9
+      }
+    },
+    {
+      "id": "ZM-002",
+      "title": "Rezervace pobytu",
+      "value": "128",
+      "description": "Počet konverzí typu rezervace pobytu.",
+      "chapter": "Základní metriky",
+      "chapter_id": "zakladni-metriky",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 30,
+        "y": 9
+      }
+    },
+    {
+      "id": "ZM-003",
+      "title": "Dárkový poukaz",
+      "value": "31",
+      "description": "Počet konverzí spojených s dárkovým poukazem.",
+      "chapter": "Základní metriky",
+      "chapter_id": "zakladni-metriky",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 50,
+        "y": 9
+      }
+    },
+    {
+      "id": "ZM-004",
+      "title": "PPC",
+      "value": "409,27",
+      "description": "Souhrnná PPC metrika zobrazená v hlavním přehledu.",
+      "chapter": "Základní metriky",
+      "chapter_id": "zakladni-metriky",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 70,
+        "y": 9
+      }
+    },
+    {
+      "id": "ZM-005",
+      "title": "Tržby",
+      "value": "948 230 Kč",
+      "description": "Celkové tržby ze sledovaných zdrojů.",
+      "chapter": "Základní metriky",
+      "chapter_id": "zakladni-metriky",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 90,
+        "y": 9
+      }
+    },
+    {
+      "id": "ZM-006",
+      "title": "Tržby Profitroom",
+      "value": "679 320 Kč",
+      "description": "Tržby připsané zdroji Profitroom.",
+      "chapter": "Základní metriky",
+      "chapter_id": "zakladni-metriky",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 10,
+        "y": 24
+      }
+    },
+    {
+      "id": "ZM-007",
+      "title": "Tržby Voucher",
+      "value": "0 Kč",
+      "description": "Tržby připsané voucherům.",
+      "chapter": "Základní metriky",
+      "chapter_id": "zakladni-metriky",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 30,
+        "y": 24
+      }
+    },
+    {
+      "id": "ZM-008",
+      "title": "Útrata PPC",
+      "value": "129 550 Kč",
+      "description": "Celková útrata za PPC kampaně.",
+      "chapter": "Základní metriky",
+      "chapter_id": "zakladni-metriky",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 50,
+        "y": 24
+      }
+    },
+    {
+      "id": "GA-001",
+      "title": "Tržby Ads",
+      "value": "1,05M",
+      "description": "Tržby připsané kampaním Google Ads.",
+      "chapter": "Google Ads",
+      "chapter_id": "google-ads",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 16,
+        "y": 45
+      }
+    },
+    {
+      "id": "GA-002",
+      "title": "Útrata Ads",
+      "value": "129 550",
+      "description": "Náklady vynaložené na Google Ads.",
+      "chapter": "Google Ads",
+      "chapter_id": "google-ads",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 35,
+        "y": 45
+      }
+    },
+    {
+      "id": "GA-003",
+      "title": "RAOS Ads",
+      "value": "808,80 %",
+      "description": "Návratnost útraty v Google Ads dle zobrazené metriky.",
+      "chapter": "Google Ads",
+      "chapter_id": "google-ads",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 54,
+        "y": 45
+      }
+    },
+    {
+      "id": "GA-004",
+      "title": "CPA Ads",
+      "value": "357 Kč",
+      "description": "Cena za jednu konverzi v Google Ads.",
+      "chapter": "Google Ads",
+      "chapter_id": "google-ads",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 73,
+        "y": 45
+      }
+    },
+    {
+      "id": "GA-005",
+      "title": "Konverze Ads",
+      "value": "363,27",
+      "description": "Počet konverzí evidovaný pro Google Ads.",
+      "chapter": "Google Ads",
+      "chapter_id": "google-ads",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 91,
+        "y": 45
+      }
+    },
+    {
+      "id": "MT-001",
+      "title": "Konverze Meta",
+      "value": "26",
+      "description": "Počet konverzí připsaných kanálu Meta.",
+      "chapter": "Meta",
+      "chapter_id": "meta",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 16,
+        "y": 67
+      }
+    },
+    {
+      "id": "MT-002",
+      "title": "CPA Meta",
+      "value": "2 467 Kč",
+      "description": "Cena za jednu konverzi v Meta kampaních.",
+      "chapter": "Meta",
+      "chapter_id": "meta",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 35,
+        "y": 67
+      }
+    },
+    {
+      "id": "MT-003",
+      "title": "Útrata Meta",
+      "value": "64 152",
+      "description": "Náklady vynaložené na Meta kampaně.",
+      "chapter": "Meta",
+      "chapter_id": "meta",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 54,
+        "y": 67
+      }
+    },
+    {
+      "id": "MT-004",
+      "title": "Tržby Meta",
+      "value": "205 790",
+      "description": "Tržby připsané Meta kampaním.",
+      "chapter": "Meta",
+      "chapter_id": "meta",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 73,
+        "y": 67
+      }
+    },
+    {
+      "id": "MT-005",
+      "title": "ROAS Meta",
+      "value": "320,79 %",
+      "description": "Návratnost reklamních výdajů Meta kampaní.",
+      "chapter": "Meta",
+      "chapter_id": "meta",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 91,
+        "y": 67
+      }
+    },
+    {
+      "id": "SK-001",
+      "title": "Konverze Sklik",
+      "value": "20",
+      "description": "Počet konverzí připsaných Skliku.",
+      "chapter": "Sklik",
+      "chapter_id": "sklik",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 16,
+        "y": 89
+      }
+    },
+    {
+      "id": "SK-002",
+      "title": "Tržby Sklik",
+      "value": "18 571",
+      "description": "Tržby připsané Sklik kampaním.",
+      "chapter": "Sklik",
+      "chapter_id": "sklik",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 35,
+        "y": 89
+      }
+    },
+    {
+      "id": "SK-003",
+      "title": "Útrata Sklik",
+      "value": "38 728",
+      "description": "Náklady vynaložené na Sklik kampaně.",
+      "chapter": "Sklik",
+      "chapter_id": "sklik",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 54,
+        "y": 89
+      }
+    },
+    {
+      "id": "SK-004",
+      "title": "CPA Sklik",
+      "value": "1 936 Kč",
+      "description": "Cena za jednu konverzi ve Skliku.",
+      "chapter": "Sklik",
+      "chapter_id": "sklik",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 73,
+        "y": 89
+      }
+    },
+    {
+      "id": "SK-005",
+      "title": "ROAS Sklik",
+      "value": "0,00 %",
+      "description": "Návratnost reklamních výdajů ve Skliku.",
+      "chapter": "Sklik",
+      "chapter_id": "sklik",
+      "screenshot": "screenshots/01-zakladni-metriky/dashboard-metriky.jpg",
+      "marker": {
+        "x": 91,
+        "y": 89
+      }
+    }
+  ]
+}
