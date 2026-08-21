@@ -37,8 +37,8 @@ services:
       WORDPRESS_TABLE_PREFIX: wp_
       WORDPRESS_DEBUG: "0"
       WORDPRESS_CONFIG_EXTRA: >-
-        define('WP_HOME', 'https://www.realitykamenicka.cz');
-        define('WP_SITEURL', 'https://www.realitykamenicka.cz');
+        define('WP_HOME', 'https://realitykamenicka.krkstrc.cz');
+        define('WP_SITEURL', 'https://realitykamenicka.krkstrc.cz');
         define('FORCE_SSL_ADMIN', true);
     volumes:
       - ./www:/var/www/html

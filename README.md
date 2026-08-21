@@ -1,6 +1,6 @@
 # realitykamenicka.cz
 
-WordPress web pro `realitykamenicka.cz`, provozovatelný lokálně přes Docker a produkčně přes Docker Compose na serveru `krkstrc.cz`.
+WordPress web pro `realitykamenicka.cz`, provozovatelný lokálně přes Docker a produkčně přes Docker Compose na serveru `krkstrc.cz` s URL `realitykamenicka.krkstrc.cz`.
 
 ## Lokální spuštění
 

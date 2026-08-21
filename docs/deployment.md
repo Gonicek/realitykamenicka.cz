@@ -10,7 +10,7 @@ GitHub main
   → Docker Compose (MariaDB + WordPress)
   → shared Docker network `web`
   → caddy-proxy
-  → https://www.realitykamenicka.cz
+  → https://realitykamenicka.krkstrc.cz
 ```
 
 ## Jednorázová příprava serveru
@@ -62,5 +62,5 @@ Push do `main` provede:
 ```bash
 cd /home/<server-user>/apps/realitykamenicka.cz
 docker compose --env-file .env.production -f compose.prod.yml ps
-curl -I https://www.realitykamenicka.cz/
+curl -I https://realitykamenicka.krkstrc.cz/
 ```
