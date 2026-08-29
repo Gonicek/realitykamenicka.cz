@@ -144,7 +144,7 @@ add_filter('the_content', function ($content) {
     );
 
     return preg_replace(
-        '/<div\\s+class=("|\\\')rk-hero-photo\\1>.*?<\\/div>/s',
+        '~<div class="rk-hero-photo">.*?</div>~s',
         $portrait,
         $content,
         1
