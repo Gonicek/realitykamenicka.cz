@@ -150,3 +150,23 @@ add_filter('the_content', function ($content) {
         1
     ) ?: $content;
 }, 20);
+
+// Some theme templates read post_content directly; cover that render path as well.
+add_action('the_post', function ($post) {
+    if (!($post instanceof WP_Post) || strpos($post->post_content, 'rk-hero-photo') === false) {
+        return;
+    }
+
+    $portrait_url = content_url('mu-plugins/assets/maklerka-hero.jpg');
+    $portrait = sprintf(
+        '<div class="rk-hero-photo"><img src="%s" alt="Angelika Kamenická – realitní makléřka" width="186" height="320" fetchpriority="high" decoding="async"></div>',
+        esc_url($portrait_url)
+    );
+
+    $post->post_content = preg_replace(
+        '~<div class="rk-hero-photo">.*?</div>~s',
+        $portrait,
+        $post->post_content,
+        1
+    ) ?: $post->post_content;
+});
