@@ -130,3 +130,23 @@ add_action('wp_head', function () {
 html.rk-lightbox-open,html.rk-lightbox-open body{overflow:hidden!important}.rk-lightbox-overlay{position:fixed!important;inset:0!important;background:rgba(18,16,17,.92)!important;z-index:2147483647!important;display:none!important;align-items:center!important;justify-content:center!important;padding:42px!important;box-sizing:border-box!important}.rk-lightbox-overlay.is-open{display:flex!important}.rk-lightbox-overlay img{max-width:92vw!important;max-height:86vh!important;width:auto!important;height:auto!important;object-fit:contain!important;box-shadow:0 20px 80px rgba(0,0,0,.45)!important}.rk-lightbox-close,.rk-lightbox-prev,.rk-lightbox-next{position:fixed!important;background:#c49649!important;color:#fff!important;border:0!important;border-radius:999px!important;width:44px!important;height:44px!important;font-size:30px!important;line-height:1!important;cursor:pointer!important;z-index:2147483647!important}.rk-lightbox-close{top:18px!important;right:18px!important}.rk-lightbox-prev{left:18px!important;top:50%!important}.rk-lightbox-next{right:18px!important;top:50%!important}.rk-lightbox-caption{position:fixed!important;left:0!important;right:0!important;bottom:12px!important;text-align:center!important;color:#fff!important;padding:0 24px!important;z-index:2147483647!important}.rk-gallery a{cursor:zoom-in!important}
 </style>';
 }, 999);
+
+// Replace the temporary homepage hero placeholder with the supplied broker portrait.
+add_filter('the_content', function ($content) {
+    if (!is_front_page() || strpos($content, 'rk-hero-photo') === false) {
+        return $content;
+    }
+
+    $portrait_url = content_url('mu-plugins/assets/maklerka-hero.jpg');
+    $portrait = sprintf(
+        '<div class="rk-hero-photo"><img src="%s" alt="Angelika Kamenická – realitní makléřka" width="186" height="320" fetchpriority="high" decoding="async"></div>',
+        esc_url($portrait_url)
+    );
+
+    return preg_replace(
+        '/<div\\s+class=("|\\\')rk-hero-photo\\1>.*?<\\/div>/s',
+        $portrait,
+        $content,
+        1
+    ) ?: $content;
+}, 20);
