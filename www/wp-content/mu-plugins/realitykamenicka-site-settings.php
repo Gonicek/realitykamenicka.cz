@@ -137,7 +137,7 @@ add_filter('the_content', function ($content) {
         return $content;
     }
 
-    $portrait_url = content_url('mu-plugins/assets/maklerka-hero.jpg');
+    $portrait_url = '/wp-content/mu-plugins/assets/maklerka-hero.jpg';
     $portrait = sprintf(
         '<div class="rk-hero-photo"><img src="%s" alt="Angelika Kamenická – realitní makléřka" width="186" height="320" fetchpriority="high" decoding="async"></div>',
         esc_url($portrait_url)
@@ -157,7 +157,7 @@ add_action('the_post', function ($post) {
         return;
     }
 
-    $portrait_url = content_url('mu-plugins/assets/maklerka-hero.jpg');
+    $portrait_url = '/wp-content/mu-plugins/assets/maklerka-hero.jpg';
     $portrait = sprintf(
         '<div class="rk-hero-photo"><img src="%s" alt="Angelika Kamenická – realitní makléřka" width="186" height="320" fetchpriority="high" decoding="async"></div>',
         esc_url($portrait_url)
