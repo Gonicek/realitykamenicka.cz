@@ -133,7 +133,7 @@ html.rk-lightbox-open,html.rk-lightbox-open body{overflow:hidden!important}.rk-l
 
 // Replace the temporary homepage hero placeholder with the supplied broker portrait.
 add_filter('the_content', function ($content) {
-    if (!is_front_page() || strpos($content, 'rk-hero-photo') === false) {
+    if (strpos($content, 'rk-hero-photo') === false) {
         return $content;
     }
 
